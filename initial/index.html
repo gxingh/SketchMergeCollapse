@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Sketch page extracter</title>
+</head>
+
+<body>
+  <div>
+      <h1>Extract pages from sketch</h1>
+      <input type="button" name="Reload" value="Reload" onclick="setVisibility()" />
+  </br>
+</br>
+</br>
+</br>
+</div>
+  <div id="selectFile">
+    <input type="file" id="sketchFile" />
+    <input type="button" name="Submit" value="Submit" onclick="openFile()" />
+  </div>
+  <div id="selectPages">
+    <h3>Pages:</h3>
+    <div id="pageList">
+    </div>
+    <input type="button" name="Export" value="Export" onclick="exportSelected()"/>
+  </div>
+
+  <script>
+    var ren = require('./renderer.js')
+    function setVisibility(){
+      document.getElementById('selectFile').style.display = 'block';
+      document.getElementById('selectPages').style.display = 'none';
+    }
+    setVisibility();
+
+    function openFile() {
+      var pages = ren.openFile(document.getElementById("sketchFile").files[0].path);
+      
+      document.getElementById("pageList").innerHTML = '';
+      document.getElementById('selectFile').style.display = 'none';
+      document.getElementById('selectPages').style.display = 'block';
+      for(var i=0; i<pages.length; i++){
+        var label = document.createElement("label");
+        var description = document.createTextNode(pages[i]);
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.name = "select[]";
+        checkbox.value = pages[i];
+        label.appendChild(checkbox);
+        label.appendChild(description);
+        
+        document.getElementById("pageList").appendChild(label);
+      }
+    }
+    function exportSelected(){
+      var pages = document.getElementById('pageList').children;
+      var unselected = [];
+      console.log(pages);
+      for(var i=0; i<pages.length; i++){
+        if(pages[i].childNodes[0].checked === false){
+          unselected.push(pages[i].childNodes[1].data);
+        }
+      }
+      ren.exportSelected(unselected);
+    }
+  </script>
+</body>
+
+</html>
