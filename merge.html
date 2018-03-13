@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Hello World!</title>
+		<style type="text/css">
+		body, html{
+			margin:0;
+		}
+		#header{
+			height:50px;
+			background-color: #000000;
+		}
+		#header a{
+			text-decoration: none;
+			margin-left:30px;
+			margin-top: 20px;
+			font-size: 25px;
+			color:#fafafa;
+		}
+		#selectFiles{
+			padding-top:100px; 
+		}
+		#selectPages{
+			padding-top:100px; 
+			display: none;
+		}
+		</style>
+	</head>
+	<body>
+		<div id="header">
+			
+		<a href="index.html">Back</a>
+		
+		</div>
+		<div id="selectFiles">
+			<center>
+			<h4>Select Parent file</h4><input type="file" name="Select parent File" multiple value="Select parent File" id="parentFile" >
+			<h4>Select Child file</h4>
+			<input type="file" name="Select child File" value="Select child File" id="childFile"><br><br>
+			<input type="button" name="Submit" value="Submit" onclick="openFiles()">
+		</center>
+		</div>
+		<div id="selectPages">
+			<center>
+			<div id="pageList">
+			</div>
+			<br>
+			<br>
+			<input type="button" name="Export" id="export" value="Export" onclick="exportFile()">
+		</center>
+		</div>
+		<script>
+			var ren = require('./renderer.js');
+			function openFiles(){
+			var parent = ren.openFile(document.getElementById("parentFile").files[0].path);
+			var pages = ren.openChildFile(document.getElementById("childFile").files[0].path);
+			for(var i=0; i<pages.length; i++){
+					var label = document.createElement("label");
+					var description = document.createTextNode(pages[i]);
+					var checkbox = document.createElement("input");
+					checkbox.type = "checkbox";
+					checkbox.name = "select[]";
+					checkbox.value = pages[i];
+					label.appendChild(checkbox);
+					label.appendChild(description);
+					
+					document.getElementById('selectFiles').style.display = 'none';
+					document.getElementById('selectPages').style.display = 'block';
+					document.getElementById("pageList").appendChild(label);
+				}
+					
+					}
+					function exportFile(){
+				var pages = document.getElementById('pageList').children;
+				var selected = [];
+				console.log(pages);
+				for(var i=0; i<pages.length; i++){
+						if(pages[i].childNodes[0].checked === true){
+							selected.push(pages[i].childNodes[1].data);
+						}
+				}
+						ren.exportMergedFile(selected);
+				alert('Export Successful');
+							
+			}
+		</script>
+	</body>
+</html>

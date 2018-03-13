@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Sketch Merge/Collapse tool</title>
+		<style type="text/css">
+		body, html{
+			margin:0;
+		}
+		#header{
+			height:150px;
+			background-color: #000000;
+			display: flex;
+			align-content: center;
+		}
+		#headerh1{
+			font-size: 25px;
+			margin:auto;
+			color:#fafafa;
+		}
+		#main{
+			margin:auto;
+			margin-top: 50px;
+			height:400px;
+			width: 804px;
+		}
+		a{
+			text-decoration: none;
+		}
+		#left{
+			height:400px;
+			width: 400px;
+			float:left;
+			display: flex;
+			align-items: center;
+		}
+		#left:hover{
+			background-color: #f1f1f1;
+		}
+		#left h3{
+			margin:auto;
+		}
+		#right{
+			height:400px;
+			width: 400px;
+			float:right;
+			display: flex;
+			align-items: center;
+		}
+		#right:hover{
+			background-color: #f1f1f1;
+		}
+		#right h3{
+			margin:auto;
+		}
+		#separator{
+			background-color: #e3e3e3;
+			height:400px;
+			width:1px;
+			float: left;
+			margin-left: 2px;
+		}
+		</style>
+	</head>
+	<body>
+		<div id="header">
+			<h1 id="headerh1">Sketch Merge/Collapse tool</h1>
+		</div>
+		<div id="main">
+			<a id="left" href="merge.html">
+				<h3>Merge Sketch Files</h3>
+			</a>
+			<div id="separator"></div>
+			<a id="right" href="collapse.html">
+				<h3>Collapse Sketch File</h3>
+			</a>
+		</div>
+		<script>
+		require('./renderer.js')
+		</script>
+	</body>
+</html>
